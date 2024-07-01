@@ -2,6 +2,8 @@ import classes from './EventItem.module.css';
 import {Link, useSubmit} from "react-router-dom";
 
 function EventItem({ event }) {
+    const token = useRouteLoaderData('root');
+
   function StartDeleteHandler() {
     const proceed = window.confirm("Are you sure you want to delete it?");
     const submit = useSubmit();
@@ -17,10 +19,10 @@ function EventItem({ event }) {
       <h1>{event.title}</h1>
       <time>{event.date}</time>
       <p>{event.description}</p>
-      <menu className={classes.actions}>
-        <Link to="edit">Edit</Link>
-        <button onClick={StartDeleteHandler}>Delete</button>
-      </menu>
+        {token && (<menu className={classes.actions}>
+            <Link to="edit">Edit</Link>
+            <button onClick={StartDeleteHandler}>Delete</button>
+        </menu>)}
     </article>
   );
 }
